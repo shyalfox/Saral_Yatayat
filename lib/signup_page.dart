@@ -153,6 +153,8 @@ class _SignUpPageState extends State<SignUpPage> {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
+        'name': nameController.text,
+        'email': emailController.text,
         'contact_number': contactNumberController.text,
       });
 
@@ -214,7 +216,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 controller: nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Full Name',
+                  labelText: 'User Name',
                   labelStyle: TextStyle(color: Colors.black),
                 ),
               ),

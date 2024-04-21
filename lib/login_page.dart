@@ -4,6 +4,7 @@ import 'package:saral_yatayat/home_page.dart';
 import 'package:saral_yatayat/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({
@@ -66,6 +67,11 @@ class LoginPage extends StatelessWidget {
           email: emailController.text,
           password: passwordController.text,
         );
+        // Get user details from Firestore
+        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .get();
 
         // Check if email is verified
         final User? user = userCredential.user;
@@ -91,10 +97,39 @@ class LoginPage extends StatelessWidget {
           return; // Stop execution if email is not verified
         }
 
-        // Navigate to the home page
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+        // Extract username from user details
+        dynamic userData = userSnapshot.data();
+        if (userData != null && userData is Map<String, dynamic>) {
+          String? username = userData['name'] as String?;
+          if (username != null) {
+            // Navigate to next page and pass username as parameter
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(username: username),
+              ),
+            );
+            return; // Exit the function after navigation
+          }
+        }
+
+        // Handle case where username is not found
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Error"),
+              content: const Text("Failed to retrieve username."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
         );
       } catch (e) {
         // Handle login errors
