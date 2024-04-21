@@ -20,8 +20,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
   Future<void> signUp() async {
-    print(passwordController.text);
     try {
       if (nameController.text.isEmpty ||
           emailController.text.isEmpty ||
@@ -69,6 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
         );
         return; // Stop execution if email format is invalid
       }
+
       // Check if contact number is exactly 10 digits long
       if (contactNumberController.text.length != 10) {
         showDialog(
@@ -118,6 +119,31 @@ class _SignUpPageState extends State<SignUpPage> {
         email: emailController.text,
         password: passwordController.text,
       );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Account Created"),
+            content: const Text("Please Verify your Email"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+
+      // Send email verification
+      await userCredential.user!.sendEmailVerification();
 
       // After successful signup, update the user's display name
       await userCredential.user!.updateDisplayName(nameController.text);
@@ -131,9 +157,13 @@ class _SignUpPageState extends State<SignUpPage> {
       });
 
       // User successfully signed up
-      if (kDebugMode) {
-        print('User signed up: ${userCredential.user!.uid}');
-      }
+      // if (kDebugMode) {
+      //   print('User signed up: ${userCredential.user!.uid}');
+      // }
+
+      // Navigate to the next page
+
+      // Show a message to the user that they need to verify their email
     } catch (e) {
       // Handle sign up errors
       if (kDebugMode) {
