@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "197565436353",
+    "project_id": "saralyatayat-ddb53",
+    "storage_bucket": "saralyatayat-ddb53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197565436353:android:f1647f337f6ee073e7df40",
+        "android_client_info": {
+          "package_name": "com.comapny.saral_yatayat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbcQ7ey6PAHkZJHjJ5bnlBPFDKi-ONVo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
