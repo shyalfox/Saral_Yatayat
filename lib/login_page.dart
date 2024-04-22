@@ -103,11 +103,12 @@ class LoginPage extends StatelessWidget {
           String? username = userData['name'] as String?;
           if (username != null) {
             // Navigate to next page and pass username as parameter
-            Navigator.pushReplacement(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => HomePage(username: username),
               ),
+              (route) => false,
             );
             return; // Exit the function after navigation
           }

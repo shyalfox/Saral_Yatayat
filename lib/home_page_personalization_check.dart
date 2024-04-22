@@ -91,17 +91,6 @@ class HomePageState extends State<HomePage> {
           // Build your personalized UI here
           return TheRealHomePage(username: username);
         } else {
-          // Navigate to the set() page if is_personalized is false
-          // WidgetsBinding.instance.addPostFrameCallback((_) {
-          //   Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => HomePagePersonalize(
-          //         username: username,
-          //       ),
-          //     ),
-          //   );
-          // });
           return HomePagePersonalize(
               username:
                   username); // Placeholder container// Placeholder container

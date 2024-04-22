@@ -233,13 +233,14 @@ class _HomePagePersonalizeState extends State<HomePagePersonalize> {
             onPressed: () {
               _saveDataToFirestore();
 
-              Navigator.pushReplacement(
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                   builder: (context) => HomePage(
                     username: username,
                   ),
                 ),
+                (route) => false,
               );
             },
             child: const Text('Finish'),
