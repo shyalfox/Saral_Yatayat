@@ -150,6 +150,7 @@ class _SlidingPageState extends State<SlidingPage> {
           ),
         ),
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }

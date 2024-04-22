@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:saral_yatayat/home_page.dart';
+import 'package:saral_yatayat/home_page_personalization_check.dart';
 import 'package:saral_yatayat/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -193,7 +193,9 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0),
                   ElevatedButton(
-                    onPressed: login,
+                    onPressed: () {
+                      login();
+                    },
                     child: const Text(
                       'Login',
                       style: TextStyle(fontSize: 16),
