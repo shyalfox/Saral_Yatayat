@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:saral_yatayat/home_page_personalization_check.dart';
-import 'database/logout.dart';
+import 'package:saral_yatayat/homepage/home_page_personalization_check.dart';
+import '../login_logout/logout.dart';
 
 class HomePagePersonalize extends StatefulWidget {
   const HomePagePersonalize({super.key, required this.username});

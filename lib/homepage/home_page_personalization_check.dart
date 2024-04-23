@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:saral_yatayat/actual_homepage.dart';
-import 'package:saral_yatayat/home_page_personalize.dart';
+import 'package:saral_yatayat/homepage/actual_homepage.dart';
+import 'package:saral_yatayat/homepage/home_page_personalize.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {

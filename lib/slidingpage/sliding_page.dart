@@ -1,5 +1,5 @@
-import 'package:saral_yatayat/login_page.dart';
-import 'package:saral_yatayat/sliding_page_content.dart';
+import 'package:saral_yatayat/login_logout/login_page.dart';
+import 'package:saral_yatayat/slidingpage/sliding_page_content.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -22,9 +22,7 @@ class _SlidingPageState extends State<SlidingPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(5),
-        child: Container(
-          decoration: BoxDecoration(color: Colors.blue.shade400),
-        ),
+        child: Container(decoration: const BoxDecoration(color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(
@@ -32,7 +30,7 @@ class _SlidingPageState extends State<SlidingPage> {
         ),
         child: Card(
           elevation: 10,
-          color: Colors.blue.shade400,
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
@@ -104,7 +102,7 @@ class _SlidingPageState extends State<SlidingPage> {
                           },
                           child: const Text(
                             'Skip',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
                         )
                       ],
@@ -129,7 +127,7 @@ class _SlidingPageState extends State<SlidingPage> {
                           },
                           child: const Text(
                             'Get Started',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
                         )
                       ],

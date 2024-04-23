@@ -1,6 +1,6 @@
-import 'package:saral_yatayat/actual_homepage.dart';
+import 'package:saral_yatayat/homepage/actual_homepage.dart';
 import 'package:saral_yatayat/firebase_options.dart';
-import 'package:saral_yatayat/sliding_page.dart';
+import 'package:saral_yatayat/slidingpage/sliding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,17 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          background: Colors.blue.shade400,
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(144, 66, 164, 245),
-          elevation: 4,
-        ),
-      ),
+
       //     home: StreamBuilder<User?>(
       //       stream: FirebaseAuth.instance.authStateChanges(),
       //       builder: (context, snapshot) {

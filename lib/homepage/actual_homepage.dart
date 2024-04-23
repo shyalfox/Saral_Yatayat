@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'database/logout.dart';
+import 'package:saral_yatayat/homepage/home_page.dart';
+import '../login_logout/logout.dart';
 
 class TheRealHomePage extends StatefulWidget {
   const TheRealHomePage({super.key, required this.username});
@@ -31,7 +32,22 @@ class _TheRealHomePageState extends State<TheRealHomePage> {
         ],
       ),
       body: Center(
-        child: Text('Welcome to the personalized page! $username'),
+        child: Column(
+          children: [
+            Text('Welcome to the personalized page! $username'),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SaralYatayatHome()));
+                },
+                child: const Text('go'))
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:saral_yatayat/login_page.dart';
+import 'package:saral_yatayat/login_logout/login_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -196,99 +196,100 @@ class _SignUpPageState extends State<SignUpPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Signup'),
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(5),
+          child: Container(
+            decoration: const BoxDecoration(color: Colors.white),
           ),
         ),
-        body: Container(
-          color: const Color.fromARGB(144, 66, 164, 245), // Background color
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'User Name',
-                  labelStyle: TextStyle(color: Colors.black),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.black),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                controller: contactNumberController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Contact Number',
-                  labelStyle: TextStyle(color: Colors.black),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'New Password',
-                  labelStyle: TextStyle(color: Colors.black),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                controller: confirmPasswordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Verify Password',
-                  labelStyle: TextStyle(color: Colors.black),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  signUp();
-                },
-                child: const Text('Sign Up'),
-              ),
-              const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                textDirection: TextDirection.ltr,
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  const Text(
-                    "Already have an Account?",
-                    style: TextStyle(fontSize: 16),
+                  const SizedBox(
+                    height: 40,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                      );
-                    },
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                          decoration: TextDecoration.underline, fontSize: 16),
+                  TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'User Name',
+                      labelStyle: TextStyle(color: Colors.black),
                     ),
                   ),
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: contactNumberController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Contact Number',
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'New Password',
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: confirmPasswordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Verify Password',
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      signUp();
+                    },
+                    child: const Text('Sign Up'),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    textDirection: TextDirection.ltr,
+                    children: [
+                      const Text(
+                        "Already have an Account?",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
         ),
         resizeToAvoidBottomInset: false,
