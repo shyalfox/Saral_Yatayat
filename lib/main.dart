@@ -20,32 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      //     home: StreamBuilder<User?>(
-      //       stream: FirebaseAuth.instance.authStateChanges(),
-      //       builder: (context, snapshot) {
-      //         if (snapshot.connectionState == ConnectionState.waiting) {
-      //           // Waiting for authentication check
-      //           return const Scaffold(
-      //             body: Center(child: CircularProgressIndicator()),
-      //           );
-      //         } else {
-      //           // Authentication check completed
-      //           if (snapshot.hasData) {
-      //             // User is logged in, navigate to HomePage
-      //             return TheRealHomePage(
-      //               username: FirebaseAuth.instance.currentUser!.uid,
-      //             );
-      //           } else {
-      //             // User is not logged in, navigate to SlidingPage
-      //             return const SlidingPage();
-      //           }
-      //         }
-      //       },
-      //     ),
-      //   );
-//  }
-// }
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

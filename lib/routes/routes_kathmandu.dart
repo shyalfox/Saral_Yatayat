@@ -1,49 +1,97 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:saral_yatayat/googleapi/distance_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class RoutesKathmandu extends StatelessWidget {
-  const RoutesKathmandu({super.key});
+class DistanceCalculator extends StatefulWidget {
+  const DistanceCalculator({super.key});
+
+  @override
+  DistanceCalculatorState createState() => DistanceCalculatorState();
+}
+
+class DistanceCalculatorState extends State<DistanceCalculator> {
+  final DistanceService _distanceService = DistanceService();
+  final TextEditingController _originController = TextEditingController();
+  final TextEditingController _destinationController = TextEditingController();
+  String _distance = '';
+
+  void _calculateDistance() async {
+    String? apiKey = await getApiKey();
+
+    String origin = _originController.text;
+    String destination = _destinationController.text;
+    try {
+      String distance =
+          await _distanceService.getDistance(origin, destination, apiKey);
+      setState(() {
+        _distance = distance;
+      });
+    } catch (e) {
+      setState(() {
+        _distance = 'Error: $e';
+      });
+    }
+  }
+
+  Future<String?> getApiKey() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('secret')
+          .doc('values')
+          .get();
+
+      // Access the data directly from the snapshot
+      Map<String, dynamic>? data = snapshot.data();
+      if (data != null && data.isNotEmpty) {
+        // Return the first value in the document
+        String firstValue = data.values.first.toString();
+        return firstValue;
+      } else {
+        // If data is empty or not found
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching API key: $e');
+      }
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () => hello(), child: Text('test'));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Distance Calculator'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            TextField(
+              controller: _originController,
+              decoration: const InputDecoration(labelText: 'Origin'),
+            ),
+            TextField(
+              controller: _destinationController,
+              decoration: const InputDecoration(labelText: 'Destination'),
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: _calculateDistance,
+              child: const Text('Calculate Distance'),
+            ),
+            const SizedBox(height: 20.0),
+            Text(
+              'Distance: $_distance',
+              style: const TextStyle(fontSize: 18.0),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
-
-class Location {
-  final double latitude;
-  final double longitude;
-
-  Location(this.latitude, this.longitude);
-}
-
-class DistanceCalculator {
-  static double calculateDistance(Location location1, Location location2) {
-    const double earthRadius = 6371; // Radius of the earth in km
-    double latDifference =
-        _degreesToRadians(location2.latitude - location1.latitude);
-    double lonDifference =
-        _degreesToRadians(location2.longitude - location1.longitude);
-    double a = sin(latDifference / 2) * sin(latDifference / 2) +
-        cos(_degreesToRadians(location1.latitude)) *
-            cos(_degreesToRadians(location2.latitude)) *
-            sin(lonDifference / 2) *
-            sin(lonDifference / 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    double distance = earthRadius * c; // Distance in km
-    return distance;
-  }
-
-  static double _degreesToRadians(double degrees) {
-    return degrees * pi / 180;
-  }
-}
-
-void hello() {
-  Location chakrapath = Location(27.742775, 85.331848);
-  Location basundhara = Location(27.715113, 85.304047);
-  double distance =
-      DistanceCalculator.calculateDistance(chakrapath, basundhara);
-  print('Distance between Chakrapath and Basundhara: $distance km');
-}
-// AIzaSyCG7lMm8Zdm9xuj8gHtaa9TDoke5BGVM2I

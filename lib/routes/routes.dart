@@ -23,7 +23,7 @@ class SaralRoutes extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RoutesKathmandu(),
+                  builder: (context) => const DistanceCalculator(),
                 ),
               );
             },
@@ -48,7 +48,7 @@ class SaralRoutes extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RoutesKathmandu(),
+                  builder: (context) => const DistanceCalculator(),
                 ),
               );
             },
@@ -72,7 +72,7 @@ class SaralRoutes extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RoutesKathmandu(),
+                  builder: (context) => const DistanceCalculator(),
                 ),
               );
             },
