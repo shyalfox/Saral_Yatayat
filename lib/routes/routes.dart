@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:saral_yatayat/routes/routes_kathmandu.dart';
+
+import 'package:saral_yatayat/routes/routes_list_kathmandu.dart';
 
 class SaralRoutes extends StatelessWidget {
   const SaralRoutes({super.key});
@@ -20,12 +21,12 @@ class SaralRoutes extends StatelessWidget {
           const SizedBox(height: 8),
           InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DistanceCalculator(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const DistanceCalculator(),
+              //   ),
+              // );
             },
             child: Container(
               width: double.infinity, // Expand the card to full width
@@ -45,12 +46,12 @@ class SaralRoutes extends StatelessWidget {
           const SizedBox(height: 8),
           InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DistanceCalculator(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const DistanceCalculator(),
+              //   ),
+              // );
             },
             child: Container(
               width: double.infinity,
@@ -72,7 +73,7 @@ class SaralRoutes extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const DistanceCalculator(),
+                  builder: (context) => const ListKathmnadu(),
                 ),
               );
             },

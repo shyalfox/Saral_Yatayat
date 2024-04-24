@@ -9,8 +9,8 @@ class SaralYatayatHome extends StatefulWidget {
 }
 
 class SaralYatayatHomeState extends State<SaralYatayatHome> {
-  int _currentPageIndex = 0;
-  final PageController _pageController = PageController(initialPage: 0);
+  int _currentPageIndex = 1;
+  final PageController _pageController = PageController(initialPage: 1);
 
   void _onPageChanged(int index) {
     setState(() {
