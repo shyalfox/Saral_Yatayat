@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:saral_yatayat/bill/bill_print.dart';
+import 'package:saral_yatayat/routes/bill/bill_print.dart';
 
 class BillCalculator extends StatefulWidget {
   const BillCalculator(

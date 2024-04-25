@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:saral_yatayat/googleapi/distance_service.dart';
+import 'package:saral_yatayat/routes/googleapi/distance_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:saral_yatayat/bill/bill_calculator.dart';
+import 'package:saral_yatayat/routes/bill/bill_calculator.dart';
 import 'package:saral_yatayat/routes/item.dart';
 
 class DistanceCalculator extends StatefulWidget {

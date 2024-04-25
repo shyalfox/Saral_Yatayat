@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:saral_yatayat/firestore/firestore_query.dart';
 import 'package:saral_yatayat/routes/item.dart';
 
 class TicketBookingPage extends StatefulWidget {
@@ -32,35 +32,35 @@ class TicketBookingPageState extends State<TicketBookingPage> {
   String isUserStudent = '';
   String userId = '';
   late Map<String, dynamic> savedData;
-  Future<void> saveOrderDetails() async {
-    try {
-      // Generate a new order ID
-      String orderId = FirebaseFirestore.instance.collection('orders').doc().id;
+  // Future<void> saveOrderDetails() async {
+  //   try {
+  //     // Generate a new order ID
+  //     String orderId = FirebaseFirestore.instance.collection('orders').doc().id;
 
-      // Check if the 'orders' collection exists, if not, create it
-      CollectionReference ordersCollection =
-          FirebaseFirestore.instance.collection('orders');
+  //     // Check if the 'orders' collection exists, if not, create it
+  //     CollectionReference ordersCollection =
+  //         FirebaseFirestore.instance.collection('orders');
 
-      // Save order details
-      await ordersCollection.doc(orderId).set({
-        'orderId': orderId,
-        'userId': userId,
-        'originLocation': originLocation,
-        'destinationLocation': destinationLocation,
-        'distance': distance,
-        'discount': discount,
-        'discountEligibility': discountEligibility,
-        // Add more fields as needed
-      });
+  //     // Save order details
+  //     await ordersCollection.doc(orderId).set({
+  //       'orderId': orderId,
+  //       'userId': userId,
+  //       'originLocation': originLocation,
+  //       'destinationLocation': destinationLocation,
+  //       'distance': distance,
+  //       'discount': discount,
+  //       'discountEligibility': discountEligibility,
+  //       // Add more fields as needed
+  //     });
 
-      // Show a success message or perform any other actions after saving the order
-    } catch (error) {
-      // Handle errors
-      if (kDebugMode) {
-        print('Failed to save order: $error');
-      }
-    }
-  }
+  //     // Show a success message or perform any other actions after saving the order
+  //   } catch (error) {
+  //     // Handle errors
+  //     if (kDebugMode) {
+  //       print('Failed to save order: $error');
+  //     }
+  //   }
+  // }
 
   void fareCalculator() {
     if (isUserStudent == "Yes" || userDisabilityStatus == "Yes") {
@@ -87,7 +87,7 @@ class TicketBookingPageState extends State<TicketBookingPage> {
   }
 
   Future<void> getData() async {
-    Map<String, dynamic> yummyData = await retrievePersonalizedDaata();
+    Map<String, dynamic> yummyData = await retrievePersonalizedDaata(userId);
     setState(() {
       savedData = yummyData;
       userGender = savedData['gender'] ??
@@ -109,41 +109,6 @@ class TicketBookingPageState extends State<TicketBookingPage> {
         print("User is not authenticated");
       }
     }
-  }
-
-  Future<Map<String, dynamic>> retrievePersonalizedDaata() async {
-    Map<String, dynamic> savedData = {};
-    try {
-      // Query for the document where the specified userId exists
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('user_data')
-          .where('userId', isEqualTo: userId)
-          .get();
-
-      // Check if there's a document with the specified userId
-      if (querySnapshot.docs.isNotEmpty) {
-        // Get the first document since there should be only one document per userId
-        DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
-
-        DocumentSnapshot updatedDocumentSnapshot = await FirebaseFirestore
-            .instance
-            .collection('user_data')
-            .doc(documentSnapshot.id)
-            .get();
-
-        // Populate savedData with the retrieved values
-        savedData = updatedDocumentSnapshot.data() as Map<String, dynamic>;
-      }
-
-      if (kDebugMode) {
-        print('data  retrieved');
-      }
-    } catch (error) {
-      if (kDebugMode) {
-        print('failed to retrieve');
-      }
-    }
-    return savedData;
   }
 
   String findLocationTitle(String coordinates) {

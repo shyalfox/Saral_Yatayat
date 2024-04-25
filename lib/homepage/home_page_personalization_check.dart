@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:saral_yatayat/homepage/actual_homepage.dart';
+
+import 'package:saral_yatayat/homepage/home_page.dart';
 import 'package:saral_yatayat/homepage/home_page_personalize.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -89,7 +90,7 @@ class HomePageState extends State<HomePage> {
 
         if (userData['is_Personalized'] == true) {
           // Build your personalized UI here
-          return TheRealHomePage(username: username);
+          return const SaralYatayatHome();
         } else {
           return HomePagePersonalize(
               username:

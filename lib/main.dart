@@ -1,5 +1,7 @@
-import 'package:saral_yatayat/homepage/actual_homepage.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:saral_yatayat/firebase_options.dart';
+import 'package:saral_yatayat/homepage/home_page.dart';
 import 'package:saral_yatayat/slidingpage/sliding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,11 +48,12 @@ class MyApp extends StatelessWidget {
                     );
                   } else {
                     // User data retrieval completed
-                    String userName =
-                        userDataSnapshot.data!.get('name') ?? 'Unknown';
-                    return TheRealHomePage(
-                      username: userName,
-                    );
+                    // String userName =
+                    //     userDataSnapshot.data!.get('name') ?? 'Unknown';
+                    if (kDebugMode) {
+                      print('userName');
+                    }
+                    return const SaralYatayatHome();
                   }
                 },
               );

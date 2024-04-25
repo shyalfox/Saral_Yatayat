@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saral_yatayat/personal/personal_page.dart';
 import 'package:saral_yatayat/routes/routes.dart';
 
 class SaralYatayatHome extends StatefulWidget {
@@ -34,7 +35,14 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: const Icon(Icons.car_repair),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () {
+              // Add your help or information action here
+            },
+          ),
+        ],
         title: const Text('Saral Yatayat'),
       ),
       body: PageView(
@@ -44,7 +52,7 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
         children: const [
           SaralRoutes(),
           PageWidget(pageNumber: 2),
-          PageWidget(pageNumber: 3),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

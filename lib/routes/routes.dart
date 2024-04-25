@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:saral_yatayat/routes/routes_list_kathmandu.dart';
+import 'package:saral_yatayat/routes/inkwell.dart';
 
 class SaralRoutes extends StatelessWidget {
   const SaralRoutes({super.key});
@@ -10,7 +11,7 @@ class SaralRoutes extends StatelessWidget {
     return SizedBox(
       height: 400, // Increased height to accommodate bigger cards
       child: Column(
-        children: [
+        children: <Widget>[
           const SizedBox(
             height: 8,
           ),
@@ -19,56 +20,8 @@ class SaralRoutes extends StatelessWidget {
             style: TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 8),
-          InkWell(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const DistanceCalculator(),
-              //   ),
-              // );
-            },
-            child: Container(
-              width: double.infinity, // Expand the card to full width
-              height: 100, // Set the height of the card
-              padding:
-                  const EdgeInsets.all(16), // Add padding for better visibility
-              child: const Card(
-                child: Center(
-                  child: Text(
-                    'Kathmandu',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          InkWell(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const DistanceCalculator(),
-              //   ),
-              // );
-            },
-            child: Container(
-              width: double.infinity,
-              height: 100,
-              padding: const EdgeInsets.all(16),
-              child: const Card(
-                child: Center(
-                  child: Text(
-                    'Lalitpur',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          InkWell(
+          InkWellCard(
+            title: 'Kathmandu',
             onTap: () {
               Navigator.push(
                 context,
@@ -77,19 +30,50 @@ class SaralRoutes extends StatelessWidget {
                 ),
               );
             },
-            child: Container(
-              width: double.infinity,
-              height: 100,
-              padding: const EdgeInsets.all(16),
-              child: const Card(
-                child: Center(
-                  child: Text(
-                    'Bhaktapur',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
+          ),
+          InkWellCard(
+            title: 'Lalitpur',
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Lalipur Route'),
+                    content: const Text('Coming Soon'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+          InkWellCard(
+            title: 'Bhaktapur',
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Bhaktapur Route'),
+                    content: const Text('Coming Soon'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
         ],
       ),
