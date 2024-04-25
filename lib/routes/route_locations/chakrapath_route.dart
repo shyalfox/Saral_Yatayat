@@ -11,36 +11,35 @@ class ChakrapathRoute extends StatefulWidget {
 }
 
 class _ChakrapathRouteState extends State<ChakrapathRoute> {
-  final List<Item> items = [
-    Item(1, 'Gausala', 27.7084959, 85.3465697),
-    Item(2, 'Gopi Krishna ', 27.7222481, 85.3468914),
-    Item(3, 'Sukhedhara', 1, 1),
-    // Item(4, 'Dhumbarahi'),
-    // Item(5, 'Chappal Karkhana'),
-    // Item(6, 'Narayan Gopal Chwok'),
-    // Item(7, 'Basundhara'),
-    // Item(8, 'Samakhusi'),
-    // Item(9, 'Gongabu'),
-    // Item(10, 'Macchapokari'),
-    // Item(11, 'Balaju Stop'),
-    // Item(12, 'Banasthali'),
-    // Item(13, 'Dhungedhara'),
-    // Item(14, 'Sano Bharyang'),
-    // Item(15, 'Thulo Bharyang'),
-    // Item(16, 'Swyambhu'),
-    // Item(17, 'Kalanki Chwok'),
-    // Item(18, 'KhasiBAzar'),
-    // Item(19, 'Balkhu'),
-    // Item(20, 'Sanepa Height'),
-    // Item(21, 'Ekantakuna'),
-    // Item(22, 'Satdobato'),
-    // Item(23, 'Gwarko'),
-    // Item(24, 'Koteshwor'),
-    // Item(25, 'Tinkune'),
-    // Item(26, 'Sinamangal'),
-    // Item(27, 'Airport (Tribhuvawan International)'),
-    // Item(28, 'Pinglasthan'),
-    // Item(29, 'Gaushala'),
+  final List<Item> chakrapath = [
+    Item(1, 'Gaushala(Start)', '27.7127136, 85.3399811'),
+    Item(2, 'Chabahil', '27.7165681, 85.3427506'),
+    Item(3, 'Sukhedhara', '27.7283581,85.3455953'),
+    Item(4, 'Dhumbarahi', '27.7313066,85.344716'),
+    Item(5, 'Chappal Karkhana', '27.7353921,85.3415949'),
+    Item(6, 'Narayan Gopal Chwok', '27.7400235,85.3330249'),
+    Item(7, 'Basundhara', '27.7384966,85.3227107'),
+    Item(8, 'Samakhusi', '27.7349492,85.3171873'),
+    Item(9, 'Gongabu', '27.7348556,85.3138949'),
+    Item(10, 'Macchapokari', '27.735031,85.3056356'),
+    Item(11, 'Balaju', '27.7284981,85.3041272'),
+    Item(12, 'Banasthali', '27.7247492,85.2973461'),
+    Item(13, 'Dhungedhara', '27.7233525,85.2945109'),
+    Item(14, 'Sano Bharyang', '27.7211188,85.2888221'),
+    Item(15, 'Thulo Bharyang', '27.719532, 85.286809'),
+    Item(16, 'Swyambhu', '27.7160242,85.2835423'),
+    Item(17, 'Kalanki Chwok', '27.6939452,85.2810343'),
+    Item(18, 'KhasiBAzar', '27.6892162,85.2836813'),
+    Item(19, 'Balkhu', '27.684321,85.2966385'),
+    Item(20, 'Dhobighat', '27.6729672,85.3019423'),
+    Item(21, 'Ekantakuna', '27.6678699,85.306829'),
+    Item(22, 'Satdobato', '27.6580887,85.3207409'),
+    Item(23, 'Gwarko', '27.6667334,85.33193'),
+    Item(24, 'Koteshwor', '27.6787139,85.3490609'),
+    Item(25, 'Tinkune', '27.6834517,85.3490277'),
+    Item(26, 'Sinamangal', '27.6952656,85.3548333'),
+    Item(27, 'Airport (Tribhuvawan International)', '27.6991622,85.3535853'),
+    Item(28, 'Gaushala (End)', '27.7068535,85.3444089'),
   ];
 
   @override
@@ -50,7 +49,7 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
         title: const Text('List Page'),
       ),
       body: ListView.builder(
-        itemCount: items.length + 2, // Add 2 for the header and the image
+        itemCount: chakrapath.length + 2, // Add 2 for the header and the image
         itemBuilder: (BuildContext context, int index) {
           if (index == 0) {
             // Header
@@ -69,6 +68,14 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
                 const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.all(1.0),
+                  child: Text(
+                    'Note: Observe from bottom to top if the Saral vehicles swaps Start point with End point',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
               ],
             );
           } else if (index == 1) {
@@ -76,7 +83,7 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
             return const SizedBox(height: 10);
           } else {
             // List item
-            final item = items[index - 2];
+            final item = chakrapath[index - 2];
             return CardItem(item: item);
           }
         },
@@ -132,7 +139,7 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
             width: double.maxFinite,
             height: double.maxFinite,
             child: DistanceCalculator(
-              items: items,
+              items: chakrapath,
             ),
           ),
           actions: [

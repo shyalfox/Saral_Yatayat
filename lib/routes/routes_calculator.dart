@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:saral_yatayat/googleapi/distance_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:saral_yatayat/bill/bill_calculator.dart';
 import 'package:saral_yatayat/routes/item.dart';
 
 class DistanceCalculator extends StatefulWidget {
@@ -15,13 +16,16 @@ class DistanceCalculator extends StatefulWidget {
 
 class DistanceCalculatorState extends State<DistanceCalculator> {
   late List<Item> items;
+  late bool showBill;
 
   final DistanceService _distanceService = DistanceService();
   String? _selectedOrigin;
   String? _selectedDestination;
+
   String _distance = '';
   void _calculateDistance() async {
     String? apiKey = await getApiKey();
+    showBill = true;
 
     try {
       String distance = await _distanceService.getDistance(
@@ -65,6 +69,7 @@ class DistanceCalculatorState extends State<DistanceCalculator> {
   @override
   void initState() {
     items = widget.items;
+    showBill = false;
     super.initState();
   }
 
@@ -81,12 +86,14 @@ class DistanceCalculatorState extends State<DistanceCalculator> {
             onChanged: (String? newValue) {
               // Change type of newValue to String?
               setState(() {
-                _selectedOrigin = newValue;
+                _selectedOrigin =
+                    newValue; // Assign coordinates to _selectedOrigin
+                showBill = false;
               });
             },
             items: items.map((Item item) {
               return DropdownMenuItem<String>(
-                value: item.title, // Use title of the item as value
+                value: item.locCoordinates, //Concatenate title and coordinates
                 child: Text(item.title),
               );
             }).toList(),
@@ -102,11 +109,12 @@ class DistanceCalculatorState extends State<DistanceCalculator> {
             onChanged: (String? newValue) {
               setState(() {
                 _selectedDestination = newValue;
+                showBill = false;
               });
             },
             items: items.map((Item item) {
               return DropdownMenuItem<String>(
-                value: item.title, // Use title of the item as value
+                value: item.locCoordinates, // Use title of the item as value
                 child: Text(item.title),
               );
             }).toList(),
@@ -123,13 +131,19 @@ class DistanceCalculatorState extends State<DistanceCalculator> {
                     ? null
                     : _calculateDistance
                 : null,
-            child: const Text('Calculate Distance'),
+            child: const Text('Calculate Fare'),
           ),
           const SizedBox(height: 20.0),
           Text(
             'Distance between $_selectedOrigin and $_selectedDestination : \n$_distance',
             style: const TextStyle(fontSize: 16.0),
           ),
+          if (showBill)
+            BillCalculator(
+              distance: _distance,
+              selectedOrigin: _selectedOrigin,
+              selectedDestination: _selectedDestination,
+            ),
         ],
       ),
     );
