@@ -23,6 +23,8 @@ class TicketBookingPageState extends State<TicketBookingPage> {
   late String destinationLocation;
   late double distance;
   double discount = 0.0;
+  double fare = 0;
+  double finalFare = 0;
   String discountEligibility = '';
 
   String userGender = '';
@@ -30,23 +32,58 @@ class TicketBookingPageState extends State<TicketBookingPage> {
   String isUserStudent = '';
   String userId = '';
   late Map<String, dynamic> savedData;
-  Future<void> discountCalculator() async {
-    setState(() {
-      if (isUserStudent == 'Yes' && userDisabilityStatus == 'Yes') {
-        discount = 15;
-        discountEligibility =
-            'You are eligible for Student & Disability Discount';
-      } else if (isUserStudent == 'Yes' && userDisabilityStatus == 'No') {
-        discount = 10;
-        discountEligibility = 'You are eligible for student discount';
-      } else if (isUserStudent == 'No' && userDisabilityStatus == 'Yes') {
-        discount = 10;
-        discountEligibility = 'You are eligible for disability discount';
-      } else {
-        discount = 0;
-        discountEligibility = 'Sorry you are not eligible for discounts';
+  Future<void> saveOrderDetails() async {
+    try {
+      // Generate a new order ID
+      String orderId = FirebaseFirestore.instance.collection('orders').doc().id;
+
+      // Check if the 'orders' collection exists, if not, create it
+      CollectionReference ordersCollection =
+          FirebaseFirestore.instance.collection('orders');
+
+      // Save order details
+      await ordersCollection.doc(orderId).set({
+        'orderId': orderId,
+        'userId': userId,
+        'originLocation': originLocation,
+        'destinationLocation': destinationLocation,
+        'distance': distance,
+        'discount': discount,
+        'discountEligibility': discountEligibility,
+        // Add more fields as needed
+      });
+
+      // Show a success message or perform any other actions after saving the order
+    } catch (error) {
+      // Handle errors
+      if (kDebugMode) {
+        print('Failed to save order: $error');
       }
-    });
+    }
+  }
+
+  void fareCalculator() {
+    if (isUserStudent == "Yes" || userDisabilityStatus == "Yes") {
+      discount = 10;
+    }
+    if (isUserStudent == "Yes" || userDisabilityStatus == "Yes") {
+      discount = 10;
+    }
+
+    if (distance <= 5) {
+      fare = 20;
+    } else if (distance > 5 && distance < 10) {
+      fare = 25;
+    } else if (distance > 10 && distance < 15) {
+      fare = 30;
+    } else {
+      fare = 35;
+    }
+    finalFare = fare - ((discount * fare) / 100);
+    if (kDebugMode) {
+      print(fare);
+      print(discount);
+    }
   }
 
   Future<void> getData() async {
@@ -120,12 +157,17 @@ class TicketBookingPageState extends State<TicketBookingPage> {
 
   @override
   void initState() {
+    super.initState();
     distance = widget.distance;
     getCurrentUser();
     getData();
+    getData().then((_) {
+      // Call fareCalculator after getData is completed
+      fareCalculator();
+      // Call setState to update the UI with the calculated fare
+    });
     originLocation = findLocationTitle(widget.originLocation);
     destinationLocation = findLocationTitle(widget.destinationLocation);
-    super.initState();
   }
 
   @override
@@ -151,6 +193,10 @@ class TicketBookingPageState extends State<TicketBookingPage> {
               title: const Text('Total Distance'),
               subtitle: Text('$distance km'),
             ),
+            ListTile(
+              title: const Text('Fare Amount'),
+              subtitle: Text('Rs $fare'),
+            ),
             isUserStudent == 'Yes' && userDisabilityStatus == 'Yes'
                 ? const ListTile(
                     title: Text('15% Discount'),
@@ -173,14 +219,16 @@ class TicketBookingPageState extends State<TicketBookingPage> {
                             subtitle: Text(
                                 'Sorry you are not eligible for discounts'),
                           ),
+            ListTile(
+              title: const Text('Final Amount'),
+              subtitle: Text('Rs $finalFare'),
+            ),
             const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // Perform order action
-                  },
+                  onPressed: () {},
                   child: const Text('Order'),
                 ),
                 ElevatedButton(
