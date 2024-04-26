@@ -38,6 +38,19 @@ class DistanceCalculatorState extends State<DistanceCalculator> {
         _distance = 'Error: $e';
       });
     }
+    Future.delayed(const Duration(seconds: 1), () {
+      // After 2 seconds, hide loading indicator and calculate bill
+      Navigator.of(context).pop(); // Hide loading indicator
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BillCalculator(
+                    distance: _distance,
+                    selectedOrigin: _selectedOrigin,
+                    selectedDestination: _selectedDestination,
+                  )));
+    });
   }
 
   Future<String?> getApiKey() async {
@@ -75,77 +88,79 @@ class DistanceCalculatorState extends State<DistanceCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          DropdownButton<String>(
-            // Change DropdownButton<Item> to DropdownButton<String>
-            value: _selectedOrigin,
-            onChanged: (String? newValue) {
-              // Change type of newValue to String?
-              setState(() {
-                _selectedOrigin =
-                    newValue; // Assign coordinates to _selectedOrigin
-                showBill = false;
-              });
-            },
-            items: items.map((Item item) {
-              return DropdownMenuItem<String>(
-                value: item.locCoordinates, //Concatenate title and coordinates
-                child: Text(item.title),
-              );
-            }).toList(),
-            icon: Container(
-              alignment: Alignment.bottomLeft,
-              child: const Icon(Icons.arrow_drop_down),
-            ),
-            hint: const Text('Select Origin'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(height: 100),
+        DropdownButton<String>(
+          // Change DropdownButton<Item> to DropdownButton<String>
+          value: _selectedOrigin,
+          onChanged: (String? newValue) {
+            // Change type of newValue to String?
+            setState(() {
+              _selectedOrigin =
+                  newValue; // Assign coordinates to _selectedOrigin
+              showBill = false;
+            });
+          },
+
+          items: items.map((Item item) {
+            return DropdownMenuItem<String>(
+              value: item.locCoordinates, //Concatenate title and coordinates
+              child: Text(item.title),
+            );
+          }).toList(),
+          icon: Container(
+            alignment: Alignment.bottomLeft,
+            child: const Icon(Icons.arrow_drop_down),
           ),
-          const SizedBox(height: 10),
-          DropdownButton<String>(
-            value: _selectedDestination,
-            onChanged: (String? newValue) {
-              setState(() {
-                _selectedDestination = newValue;
-                showBill = false;
-              });
-            },
-            items: items.map((Item item) {
-              return DropdownMenuItem<String>(
-                value: item.locCoordinates, // Use title of the item as value
-                child: Text(item.title),
-              );
-            }).toList(),
-            icon: Container(
-              alignment: Alignment.center,
-              child: const Icon(Icons.arrow_drop_down),
-            ),
-            hint: const Text('Select Destination'),
+          hint: const Text('Select Origin'),
+        ),
+        const SizedBox(height: 10),
+        DropdownButton<String>(
+          value: _selectedDestination,
+          onChanged: (String? newValue) {
+            setState(() {
+              _selectedDestination = newValue;
+              showBill = false;
+            });
+          },
+          items: items.map((Item item) {
+            return DropdownMenuItem<String>(
+              value: item.locCoordinates, // Use title of the item as value
+              child: Text(item.title),
+            );
+          }).toList(),
+          icon: Container(
+            alignment: Alignment.center,
+            child: const Icon(Icons.arrow_drop_down),
           ),
-          const SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: _selectedOrigin != null && _selectedDestination != null
-                ? _selectedOrigin == _selectedDestination
-                    ? null
-                    : _calculateDistance
-                : null,
-            child: const Text('Calculate Fare'),
+          hint: const Text('Select Destination'),
+        ),
+        const SizedBox(height: 20.0),
+        ElevatedButton(
+          onPressed: _selectedOrigin != null && _selectedDestination != null
+              ? _selectedOrigin == _selectedDestination
+                  ? null
+                  : _calculateDistance
+              : null,
+          child: const Text('Calculate Fare'),
+        ),
+        const SizedBox(height: 20.0),
+        if (showBill)
+          const Row(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(), // Loading indicator
+                  SizedBox(width: 20.0),
+                  Text('Processing...'),
+                ],
+              )
+            ],
           ),
-          const SizedBox(height: 20.0),
-          Text(
-            'Distance between $_selectedOrigin and $_selectedDestination : \n$_distance',
-            style: const TextStyle(fontSize: 16.0),
-          ),
-          if (showBill)
-            BillCalculator(
-              distance: _distance,
-              selectedOrigin: _selectedOrigin,
-              selectedDestination: _selectedDestination,
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

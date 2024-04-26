@@ -134,22 +134,26 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: SizedBox(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            child: DistanceCalculator(
-              items: chakrapath,
+        return Dialog(
+          insetPadding: EdgeInsets.zero, // Set insetPadding to zero
+          child: AlertDialog(
+            title: const Text('Select Locations'),
+            content: OverflowBox(
+              minWidth: 0.0,
+              maxWidth: double.infinity,
+              minHeight: 0.0,
+              maxHeight: double.infinity,
+              child: DistanceCalculator(items: chakrapath),
             ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text('Close'),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
         );
       },
     );

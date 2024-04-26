@@ -198,7 +198,7 @@ class TicketBookingPageState extends State<TicketBookingPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Perform cancel action
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Cancel'),
                 ),

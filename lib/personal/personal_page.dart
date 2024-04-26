@@ -25,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late Map<String, dynamic> savedData;
   late Map<String, dynamic> savedYummyData;
   bool isLoading = true;
+  bool isLoadingImage = true;
 
   void setGenderImage() {
     if (userGender == 'Male') {
@@ -71,15 +72,22 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    setGenderImage();
     Timer(const Duration(seconds: 1), () {
       setState(() {
         isLoading = false;
       });
     });
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        isLoadingImage = false;
+      });
+    });
     getCurrentUser();
-    getData();
 
-    setGenderImage();
+    getData().then((_) {
+      setGenderImage();
+    });
   }
 
   @override
@@ -114,13 +122,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                child: Image.asset(
-                  imgUrl,
-                  width: 100, // Example width
-                  height: 100, // Example height
-                  fit: BoxFit
-                      .contain, // Ensure the entire image is visible without cropping or zooming
-                ),
+                child: isLoadingImage
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Image.asset(
+                        imgUrl,
+                        width: 100, // Example width
+                        height: 100, // Example height
+                        fit: BoxFit.contain, // Ensure the
+                      ),
               ),
             ],
           ),

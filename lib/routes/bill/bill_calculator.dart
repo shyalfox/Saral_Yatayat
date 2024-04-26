@@ -91,33 +91,42 @@ class _BillCalculatorState extends State<BillCalculator> {
     return savedData;
   }
 
+  void calculate() {
+    Future.delayed(const Duration(seconds: 1), () {
+      // After 2 seconds, hide loading indicator and calculate bill
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TicketBookingPage(
+                    originLocation: selectedOrigin,
+                    destinationLocation: selectedDestinatiion,
+                    distance: distances,
+                  )));
+    });
+  }
+
   @override
   void initState() {
+    super.initState();
     distance = widget.distance;
     getCurrentUser();
     getData();
     selectedOrigin = widget.selectedOrigin!;
     selectedDestinatiion = widget.selectedDestination!;
-
-    super.initState();
+    calculate();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(distances.toString()),
-        ElevatedButton(
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => TicketBookingPage(
-                          originLocation: selectedOrigin,
-                          destinationLocation: selectedDestinatiion,
-                          distance: distances,
-                        ))),
-            child: const Text('Press'))
-      ],
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+          ],
+        ),
+      ),
     );
   }
 }
