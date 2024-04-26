@@ -11,6 +11,7 @@ class SaralYatayatHome extends StatefulWidget {
 
 class SaralYatayatHomeState extends State<SaralYatayatHome> {
   int _currentPageIndex = 1;
+
   final PageController _pageController = PageController(initialPage: 1);
 
   void _onPageChanged(int index) {
@@ -24,10 +25,15 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
       _currentPageIndex = index;
       _pageController.animateToPage(
         index,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.ease,
       );
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -51,7 +57,7 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
         physics: const NeverScrollableScrollPhysics(), // Disable swipe gesture
         children: const [
           SaralRoutes(),
-          PageWidget(pageNumber: 2),
+          SaralPages(),
           ProfilePage(),
         ],
       ),
@@ -77,18 +83,18 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
   }
 }
 
-class PageWidget extends StatelessWidget {
-  final int pageNumber;
-
-  const PageWidget({super.key, required this.pageNumber});
+class SaralPages extends StatelessWidget {
+  const SaralPages({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: SingleChildScrollView(
         child: Text(
-          'Page $pageNumber',
-          style: const TextStyle(fontSize: 24),
+          'Page ',
+          style: TextStyle(fontSize: 24),
         ),
       ),
     );
