@@ -6,6 +6,8 @@ import 'package:saral_yatayat/firestore/firestore_query.dart';
 import 'package:saral_yatayat/personal/personal_details.dart';
 import 'dart:async';
 
+import 'package:saral_yatayat/personal/ticket_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -153,7 +155,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             )));
               }),
           const SizedBox(height: 20),
-          InkWellCardPersonal(title: 'Tickets', onTap: () {}),
+          InkWellCardPersonal(
+              title: 'Tickets',
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TicketPage(
+                        userId: userId,
+                      ),
+                    ));
+              }),
           const SizedBox(height: 20),
           InkWellCardPersonal(
               title: 'FeedBacks/Questions',

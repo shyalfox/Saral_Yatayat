@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:saral_yatayat/personal/personal_page.dart';
 import 'package:saral_yatayat/routes/routes.dart';
@@ -31,6 +33,38 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
     });
   }
 
+  Future<bool> onBackPressed(BuildContext context, bool didPop) async {
+    if (didPop) {
+      return true;
+    } else {
+      // Show AlertDialog
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Are you sure you want to exit?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  exit(0); // Close the app
+                },
+                child: const Text('Yes'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text('No'),
+              ),
+            ],
+          );
+        },
+      );
+      // Return false to indicate that back button press is handled
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -51,15 +85,20 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
         ],
         title: const Text('Saral Yatayat'),
       ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        physics: const NeverScrollableScrollPhysics(), // Disable swipe gesture
-        children: const [
-          SaralRoutes(),
-          SaralPages(),
-          ProfilePage(),
-        ],
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) => onBackPressed(context, didPop),
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          physics:
+              const NeverScrollableScrollPhysics(), // Disable swipe gesture
+          children: const [
+            SaralRoutes(),
+            SaralPages(),
+            ProfilePage(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPageIndex,

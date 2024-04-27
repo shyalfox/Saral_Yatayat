@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import 'package:saral_yatayat/firebase_options.dart';
 import 'package:saral_yatayat/homepage/home_page.dart';
 import 'package:saral_yatayat/slidingpage/sliding_page.dart';
@@ -50,9 +48,9 @@ class MyApp extends StatelessWidget {
                     // User data retrieval completed
                     // String userName =
                     //     userDataSnapshot.data!.get('name') ?? 'Unknown';
-                    if (kDebugMode) {
-                      print('userName');
-                    }
+                    // if (kDebugMode) {
+                    //   print(userName);
+                    // }
                     return const SaralYatayatHome();
                   }
                 },
