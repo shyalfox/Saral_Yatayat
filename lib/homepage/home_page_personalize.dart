@@ -112,7 +112,7 @@ class _HomePagePersonalizeState extends State<HomePagePersonalize> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Home Page'),
+        title: const Text('Personalizing'),
         actions: [
           IconButton(
             onPressed: () => logout(context),

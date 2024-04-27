@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:saral_yatayat/homepage/home_saral_page.dart';
 import 'package:saral_yatayat/personal/personal_page.dart';
 import 'package:saral_yatayat/routes/routes.dart';
 
@@ -83,7 +84,15 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
             },
           ),
         ],
-        title: const Text('Saral Yatayat'),
+        title: const Row(
+          children: [
+            Icon(Icons.car_repair),
+            SizedBox(
+              width: 10,
+            ),
+            Text('Saral Yatayat'),
+          ],
+        ),
       ),
       body: PopScope(
         canPop: false,
@@ -117,24 +126,6 @@ class SaralYatayatHomeState extends State<SaralYatayatHome> {
             label: 'Profile',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class SaralPages extends StatelessWidget {
-  const SaralPages({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: SingleChildScrollView(
-        child: Text(
-          'Page ',
-          style: TextStyle(fontSize: 24),
-        ),
       ),
     );
   }

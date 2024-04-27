@@ -71,6 +71,7 @@ class _TicketPageState extends State<TicketPage> {
     String validDistance = '${qrCodes[index]['fareValidDistance']}';
     String locataions =
         '${qrCodes[index]['originLocation']} to ${qrCodes[index]['destinationLocation']}';
+    String discountPercentage = '${qrCodes[index]['discount']}';
 
     ByteData? byteData = await QrPainter(
       data: qrData,
@@ -93,8 +94,9 @@ class _TicketPageState extends State<TicketPage> {
               Text(locataions),
               Text('Creation Date: $createDate'),
               Text('Expiry Date: $expireDate'),
+              Text('Discount: $discountPercentage %'),
               Text('Fare: $fareAmount'),
-              Text('Excahngable for trip $validDistance')
+              Text('Exchangable for trip $validDistance')
             ],
           ),
         ),
@@ -147,41 +149,59 @@ class _TicketPageState extends State<TicketPage> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Firestore Query Example'),
-      ),
-      body: ListView.builder(
-        itemCount: qrCodes.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              // Call the showData function and provide the showDialogCallback
-              showData((dialog) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return dialog;
-                  },
-                );
-              }, index);
-            },
-            child: Container(
-              width: double.infinity,
-              height: 100,
-              padding: const EdgeInsets.all(16),
-              child: Card(
-                child: Center(
-                  child: ListTile(
-                    title: Text('Order Details: ${firstThreeWordsList[index]}'),
-                    subtitle: Text('Status: ${qrCodes[index]['status']}'),
-                    // Add other fields as needed
+        appBar: AppBar(
+          title: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  // Add your action here
+                },
+                icon: const Icon(Icons
+                    .stay_primary_landscape_rounded), // Replace 'your_icon' with the desired icon
+              ),
+              const Text('Tickets'), // Place your title here
+            ],
+          ),
+          automaticallyImplyLeading: false,
+        ),
+        body: ListView.builder(
+          itemCount: qrCodes.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                // Call the showData function and provide the showDialogCallback
+                showData((dialog) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog;
+                    },
+                  );
+                }, index);
+              },
+              child: Container(
+                width: double.infinity,
+                height: 100,
+                padding: const EdgeInsets.all(16),
+                child: Card(
+                  child: Center(
+                    child: ListTile(
+                      title:
+                          Text('Order Details: ${firstThreeWordsList[index]}'),
+                      subtitle: Text('Status: ${qrCodes[index]['status']}'),
+                      // Add other fields as needed
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ));
   }
 }

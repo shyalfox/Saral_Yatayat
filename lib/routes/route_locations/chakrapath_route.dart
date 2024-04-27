@@ -15,7 +15,7 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List Page'),
+        title: const Text('Chakrapath Route'),
       ),
       body: ListView.builder(
         itemCount: chakrapath.length + 2, // Add 2 for the header and the image
@@ -26,8 +26,8 @@ class _ChakrapathRouteState extends State<ChakrapathRoute> {
               children: [
                 SizedBox(
                   height: 200,
-                  child: Image.network(
-                    'https://via.placeholder.com/350',
+                  child: Image.asset(
+                    'assets/images/chakrapath.png',
                     fit: BoxFit.cover,
                   ),
                 ),
